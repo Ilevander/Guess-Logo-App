@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#86EDFA"
     android:orientation="vertical"
+    android:background="#86EDFA"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -50,8 +50,8 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +71,6 @@
                 android:layout_width="250dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                android:background="#798693"
                 android:padding="10dp"
                 app:srcCompat="@drawable/q" />
 
@@ -79,7 +78,7 @@
                 android:id="@+id/answers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
 
 
         </LinearLayout>
@@ -88,16 +87,15 @@
 
     <Button
         android:id="@+id/button_submit"
-        android:padding="16dp"
-        android:layout_margin="8dp"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:background="#2196F3"
-        android:textSize="25sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit My Answer"/>
-
+        android:layout_margin="8dp"
+        android:background="#2196F3"
+        android:padding="16dp"
+        android:text="Submit My Answer"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 </LinearLayout>
