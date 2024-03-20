@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         mQuizImage.setImageResource(getResources().getIdentifier(img,"drawable",getPackageName()));
 
     }
+
+    //Dynamic Radio Button
     private void showRadioButtonAnswers(int qnum){
         final LinearLayout answerLayout = findViewById(R.id.answers_layout);
 
