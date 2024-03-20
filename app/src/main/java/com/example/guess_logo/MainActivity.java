@@ -12,6 +12,14 @@ import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.graphics.Color;
 import android.widget.ScrollView;
+import android.os.Handler;
+import android.content.Intent;
+import android.widget.Toast;
+import com.example.guess_logo.ResultActivity;
+
+
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,16 +42,62 @@ public class MainActivity extends AppCompatActivity {
         mQuestionView = findViewById(R.id.question_textview);
         mQuizNumView = findViewById(R.id.quiznum_textview);
 
+        updateQuestion();
+
         Button submit = findViewById(R.id.button_submit);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Quiz Logic
+                if ("radiobutton".equals(questions.getType(QuestionNum))) {
+                    if (questions.getmCorrecrtAnswers(QuestionNum).equals(mAnswer)) {
+                        mScore++;
+                        displayToastCorrectAnswer();
+                    } else {
+                        displayToastWrongAnswer();
+                    }
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (QuestionNum == questions.getLenght() - 1) {
+                    Intent intent_result = new Intent(MainActivity.this, ResultActivity.class);
+                    intent_result.putExtra("totalQuestions", questions.getLenght());
+                    intent_result.putExtra("finalScore", mScore);
+                    startActivity(intent_result);
+
+                    QuestionNum = 0;
+                    mQuizNum = 0;
+                    mScore = 0;
+                } else {
+                    QuestionNum++;
+                    mQuizNum++;
+                }
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateQuestion();
+                    }
+                }, 1000);
             }
         });
-
-        updateQuestion(); // Call updateQuestion initially
     }
+
+
+
+    private void displayToastCorrectAnswer(){
+        Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
+    }
+    private void displayToastWrongAnswer(){
+        Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
+    }
+
 
     @SuppressLint("DiscouragedApi")
     private void showMainImage() {
