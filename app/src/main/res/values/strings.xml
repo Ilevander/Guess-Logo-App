@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Guess-Logo</string>
+    <string name="txtCorrectScore">Your score: %1$d/%2$d</string>
 </resources>
+
