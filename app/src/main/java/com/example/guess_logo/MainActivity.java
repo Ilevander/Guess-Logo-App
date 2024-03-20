@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.graphics.Color;
-
-
-
+import android.widget.ScrollView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,34 +23,37 @@ public class MainActivity extends AppCompatActivity {
     private int QuestionNum = 0;
     private TextView mQuestionView;
     private TextView mQuizNumView;
-    private Questions mQuestions = new Questions();
+    private Questions questions = new Questions();
     private String mAnswer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       mQuestionView = findViewById(R.id.question_textview);
-       mQuizNumView = findViewById(R.id.quiznum_textview);
+        mQuestionView = findViewById(R.id.question_textview);
+        mQuizNumView = findViewById(R.id.quiznum_textview);
 
-       Button submit = findViewById(R.id.button_submit);
-       submit.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View view){
-             //Quiz Logic
-           }
-       });
+        Button submit = findViewById(R.id.button_submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Quiz Logic
+            }
+        });
+
+        updateQuestion(); // Call updateQuestion initially
     }
+
     @SuppressLint("DiscouragedApi")
-    private void showMainImage(){
+    private void showMainImage() {
         mQuizImage = findViewById(R.id.quiz_image);
-        String img = mQuestions.getmImages(QuestionNum);
-        mQuizImage.setImageResource(getResources().getIdentifier(img,"drawable",getPackageName()));
-
+        String img = questions.getmImages(QuestionNum);
+        mQuizImage.setImageResource(getResources().getIdentifier(img, "drawable", getPackageName()));
     }
 
-    //Dynamic Radio Button
-    private void showRadioButtonAnswers(int qnum){
+    // Dynamic Radio Button
+    private void showRadioButtonAnswers(int qnum) {
         final LinearLayout answerLayout = findViewById(R.id.answers_layout);
 
         RadioGroup rg = new RadioGroup(this);
@@ -64,16 +65,15 @@ public class MainActivity extends AppCompatActivity {
         );
 
         rg.setLayoutParams(lp);
-        rg.setPadding(400,0,0,0);
-
+        rg.setPadding(400, 0, 0, 0);
 
         final RadioButton[] rb1 = new RadioButton[3];
 
-        for (int i = 0;i <=2 ; i++){
+        for (int i = 0; i <= 2; i++) {
             rb1[i] = new RadioButton(this);
-            rb1[i].setText(mQuestions.getmChoice(qnum) [i]);
+            rb1[i].setText(questions.getmChoice(qnum)[i]);
             rb1[i].setTextColor(Color.BLACK);
-            rb1[i].setPadding(10,16,8,16);
+            rb1[i].setPadding(10, 16, 8, 16);
             rb1[i].setTextSize(25);
             rb1[i].setId(i);
             rb1[i].setWidth(1000);
@@ -84,15 +84,29 @@ public class MainActivity extends AppCompatActivity {
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int Id) {
-
-                mAnswer = mQuestions.getmChoice(QuestionNum)[Id];
-
+                mAnswer = questions.getmChoice(QuestionNum)[Id];
             }
         });
 
         answerLayout.addView(rg);
-
     }
 
+    // Update Questions
+    private void updateQuestion() {
+        LinearLayout answerLayout = findViewById(R.id.answers_layout);
+        answerLayout.removeAllViews();
+        mAnswer = "";
 
+        mQuizNumView.setText(mQuizNum + "/" + String.valueOf(questions.getLenght())); // Corrected method call
+        mQuestionView.setText(questions.getmQuestions(QuestionNum));
+
+        if ("radiobutton".equals(questions.getType(QuestionNum))) {
+            showRadioButtonAnswers(QuestionNum);
+        }
+
+        showMainImage();
+
+        ScrollView sv = findViewById(R.id.scrollView);
+        sv.smoothScrollTo(0, 0);
+    }
 }
