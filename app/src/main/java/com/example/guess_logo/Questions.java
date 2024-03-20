@@ -12,7 +12,6 @@ public class Questions {
             "Guess the Logo ?",
             "Can you this one?",
             "Guess the Logo ?",
-            "Guess the Logo ?",
     };
     
     private String mChoice[] [] = {
@@ -88,5 +87,33 @@ public class Questions {
             "Unity",
     };
 
+    //Getters and Setters:
+    public String getmQuestions(int q) {
+        String questions = mQuestions[q];
+        return questions;
+    }
 
+    public String[] getmChoice(int q) {
+        String[] choice = mChoice[q];
+        return choice;
+    }
+
+    public String getmImages(int q) {
+        String img = mImages[q];
+        return img;
+    }
+
+    public String getType(int q) {
+        String type = mQuestionsType[q];
+        return type;
+    }
+
+    public int getLenght(){
+        return mQuestions.length;
+    }
+
+    public String getmCorrecrtAnswers(int q) {
+        String correct = mCorrecrtAnswers[q];
+        return correct;
+    }
 }
